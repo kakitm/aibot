@@ -3,7 +3,7 @@ import os
 from discord import Colour, Embed, Interaction
 
 from src.aibot.discord.client import BotClient
-from src.aibot.discord.decorators.permission import is_admin_user, is_not_blocked_user
+from src.aibot.discord.decorators.permission import is_admin_user
 from src.aibot.infrastructure.dao.usage import UsageDAO
 from src.aibot.logger import logger
 
@@ -58,7 +58,6 @@ async def set_limit_command(interaction: Interaction, limit: int) -> None:
     name="limit",
     description="現在の利用状況を確認します",
 )
-@is_not_blocked_user()
 async def limit_command(interaction: Interaction) -> None:
     """Check user's limit and current usage."""
     try:
