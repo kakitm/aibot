@@ -210,10 +210,10 @@ def get_model_choices(command_name: str) -> list[app_commands.Choice[str]]:
 
     Examples
     --------
-    @app_commands.choices(model=get_model_choices("fixme"))
-    async def fixme_command(interaction: Interaction, model: str | None = None):
-        # model parameter will have choices automatically applied
-        pass
+    >>> @app_commands.choices(model=get_model_choices("key_name"))
+    ... async def some_command(interaction: Interaction, model: str | None = None):
+    ...     # model parameter will have choices automatically applied
+    ...     pass
 
     """
     resolver = ModelResolver.get_instance()
