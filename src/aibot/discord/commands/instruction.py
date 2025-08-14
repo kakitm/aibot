@@ -3,7 +3,8 @@ import os
 from discord import Interaction, SelectOption, TextStyle, ui
 
 from src.aibot.discord.client import BotClient
-from src.aibot.discord.decorators.permission import is_admin_user, is_restricted
+from src.aibot.discord.decorators.instruction import is_restricted
+from src.aibot.discord.decorators.permission import is_admin_user
 from src.aibot.logger import logger
 from src.aibot.services.instruction import InstructionService
 from src.aibot.services.restriction import RestrictionService
