@@ -1,9 +1,9 @@
 """Decorators for instruction related commands."""
 
 from collections.abc import Callable
-from typing import Any, TypeVar
+from typing import TypeVar
 
-from discord import Interaction
+from discord import Interaction, app_commands
 
 from src.aibot.services.restriction import RestrictionService
 
@@ -19,37 +19,18 @@ def is_restricted() -> Callable[[T], T]:
     Returns
     -------
     Callable[[T], T]
-        A decorator that wraps the command function to check restriction mode.
+        A decorator that checks whether restriction mode is active.
 
     """
 
-    def decorator(func: T) -> T:
-        async def wrapper(interaction: Interaction, *args: Any, **kwargs: Any) -> None:  # noqa: ANN401
-            """Wrapper function that checks restriction mode before executing command.
+    async def predicate(interaction: Interaction) -> bool:
+        restriction_service = RestrictionService.get_instance()
 
-            Parameters
-            ----------
-            interaction : Interaction
-                Discord interaction object.
-            *args : Any
-                Positional arguments for the original function.
-            **kwargs : Any
-                Keyword arguments for the original function.
+        if restriction_service.is_restricted():
+            error_message = "⚠️ 制限モードが有効です。カスタム指示の作成・変更ができません。"
+            await interaction.response.send_message(error_message, ephemeral=True)
+            return False
 
-            """
-            restriction_service = RestrictionService.get_instance()
+        return True
 
-            if restriction_service.is_restricted():
-                # Send restriction mode message
-                await interaction.response.send_message(
-                    "⚠️ 制限モードが有効です。カスタム指示の作成・変更ができません。",
-                    ephemeral=True,
-                )
-                return
-
-            # Restriction mode is not active, proceed with original function
-            await func(interaction, *args, **kwargs)
-
-        return wrapper
-
-    return decorator
+    return app_commands.check(predicate)
