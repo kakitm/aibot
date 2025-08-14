@@ -1,7 +1,6 @@
 from discord import (
     Interaction,
     TextStyle,
-    app_commands,
 )
 from discord.ui import Modal, TextInput
 
@@ -10,7 +9,7 @@ from src.aibot.infrastructure.api.factory import ResponseFactory
 from src.aibot.infrastructure.dao.usage import UsageDAO
 from src.aibot.models.chat import ChatMessage
 from src.aibot.services.instruction import InstructionService
-from src.aibot.services.model_resolver import ModelResolver, get_model_choices
+from src.aibot.services.model_resolver import ModelResolver
 
 client = BotClient.get_instance()
 
@@ -83,20 +82,17 @@ class CodeModal(Modal):
 
 
 @client.tree.command(name="fixme", description="コードのバグを特定し修正します")
-@app_commands.choices(model=get_model_choices("fixme"))
-async def fixme_command(interaction: Interaction, model: str | None = None) -> None:
+async def fixme_command(interaction: Interaction) -> None:
     """Detect and fix bugs in code.
 
     Parameters
     ----------
     interaction : Interaction
         The interaction instance.
-    model : str | None
-        The model to use for code fixing (if multiple models are available).
 
     """
     try:
-        modal = CodeModal(selected_model=model)
+        modal = CodeModal(selected_model=None)
         await interaction.response.send_modal(modal)
 
     except Exception as e:
