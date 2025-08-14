@@ -2,7 +2,7 @@ import asyncio
 import datetime
 import os
 from collections.abc import Callable, Coroutine
-from typing import TypeVar
+from typing import ClassVar, TypeVar
 
 import pytz
 
@@ -19,6 +19,8 @@ class TaskScheduler:
     This class provides functionality to schedule tasks to run at
     specific times, such as daily at midnight.
     """
+
+    _background_tasks: ClassVar[set[asyncio.Task]] = set()
 
     @staticmethod
     async def _wait_until(dt: datetime.datetime) -> None:
@@ -79,7 +81,7 @@ class TaskScheduler:
             await asyncio.sleep(1)
 
     @staticmethod
-    async def start_reset_usage_scheduler() -> None:
+    def start_reset_usage_scheduler() -> asyncio.Task:
         """Start scheduler to reset usage counts at midnight."""
         # Reset time - midnight (00:00:00)
         reset_time = datetime.time(0, 0, 0, tzinfo=TIMEZONE)
@@ -88,5 +90,22 @@ class TaskScheduler:
             await UsageDAO().RESET()
             logger.info("Successfully reset all user API usage counts")
 
-        # Start the scheduler
-        await TaskScheduler._schedule_daily(reset_time, reset_all_usage)
+        # Create and return the task
+        return asyncio.create_task(TaskScheduler._schedule_daily(reset_time, reset_all_usage))
+
+    @classmethod
+    def start_all(cls) -> None:
+        """Start all background schedulers and manage them."""
+        # Start usage reset scheduler
+        task = cls.start_reset_usage_scheduler()
+        cls._background_tasks.add(task)
+        task.add_done_callback(cls._background_tasks.discard)
+        logger.info("All schedulers started successfully")
+
+    @classmethod
+    def stop_all(cls) -> None:
+        """Stop all background schedulers."""
+        for task in cls._background_tasks:
+            task.cancel()
+        cls._background_tasks.clear()
+        logger.info("All schedulers stopped")
