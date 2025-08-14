@@ -1,2 +1,3 @@
-instructions/gen/
-instructions/default.yml
+*
+
+!resources/sample.yml
