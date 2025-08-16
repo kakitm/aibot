@@ -1,0 +1,21 @@
+# ========================== PREFIX ==========================
+# change   Modifications to existing features
+# chore    Changes that do not affect the user experience
+# docs     Documentation changes
+# feat     Addition of a new feature
+# fix      Bug fixes and similar corrections
+# perf     Changes related to performance improvements
+# refactor Code changes that do not affect behavior
+# release  Used when creating a release
+# revert   Reverting a previous change
+# test     Changes related to testing
+
+# ========================== FORMAT ==========================
+# <PREFIX>[optional scope]: <description>
+#
+# [optional body]
+#
+# [optional footer]
+#
+# A breaking change must be explicitly indicated by including
+# `BREAKING CHANGE` either as a prefix or in the footer.

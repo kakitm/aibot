@@ -1,0 +1,68 @@
+{
+  "default_models": [
+    {
+      "id": "claude-sonnet-4-20250514",
+      "display_name": "Claude Sonnet 4",
+      "provider": "anthropic",
+      "params": {
+        "max_tokens": 4096,
+        "temperature": 0.4,
+        "top_p": 0.95
+      }
+    },
+    {
+      "id": "gemini-2.5-flash",
+      "display_name": "Gemini 2.5 Flash",
+      "provider": "google",
+      "params": {
+        "max_tokens": 4096,
+        "temperature": 0.4,
+        "top_p": 0.95
+      }
+    },
+    {
+      "id": "gpt-4o-mini",
+      "display_name": "GPT-4o Mini",
+      "provider": "openai",
+      "params": {
+        "max_tokens": 4096,
+        "temperature": 0.4,
+        "top_p": 0.95
+      }
+    }
+  ],
+  "chat_models": [
+    {
+      "id": "claude-sonnet-4-20250514",
+      "display_name": "Claude Sonnet 4",
+      "provider": "anthropic",
+      "params": {
+        "max_tokens": 4096,
+        "temperature": 0.4,
+        "top_p": 0.95
+      }
+    },
+    {
+      "id": "gemini-2.5-flash",
+      "display_name": "Gemini 2.5 Flash",
+      "provider": "google",
+      "params": {
+        "max_tokens": 4096,
+        "temperature": 0.4,
+        "top_p": 0.95
+      }
+    }
+  ],
+  "fixme_models": [
+    {
+      "id": "claude-sonnet-4-20250514",
+      "display_name": "Claude Sonnet 4",
+      "provider": "anthropic",
+      "params": {
+        "max_tokens": 4096,
+        "temperature": 0.4,
+        "top_p": 0.95
+      }
+    }
+  ]
+}
