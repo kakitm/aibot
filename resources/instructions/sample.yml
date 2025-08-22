@@ -6,7 +6,7 @@
 # These instructions serve as fallbacks when custom instructions are disabled
 # or restricted via the lock command - making them critical configuration.
 #
-# To use this configuration, rename this file to "default.yml".
+# To use this configuration, rename this file to "instructions.yml".
 #
 # Use command names (e.g., chat, fixme) as keys and write
 # the corresponding system instructions below.
