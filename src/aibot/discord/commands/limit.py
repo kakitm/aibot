@@ -35,7 +35,7 @@ async def set_limit_command(interaction: Interaction, limit: int) -> None:
             )
             return
 
-        await usage_dao.set_default_daily_limit(limit)
+        await usage_dao.set_daily_usage_limit(limit)
 
         await interaction.response.send_message(
             f"使用回数の上限を{limit}/dayに設定しました",

@@ -40,7 +40,7 @@ async def chat_command(interaction: Interaction, user_msg: str) -> None:
 
         # Track usage
         usage_dao = UsageDAO()
-        await usage_dao.increment_usage_count(user.id)
+        await usage_dao.increment_daily_usage_count(user.id)
 
         # Get static instruction only (no custom instructions for chat command)
         system_instruction = instruction_service.load_static_instruction("chat")

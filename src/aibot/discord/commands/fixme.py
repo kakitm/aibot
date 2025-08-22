@@ -73,7 +73,7 @@ class CodeModal(Modal):
                 ephemeral=False,
             )
             # Track usage
-            await UsageDAO().increment_usage_count(interaction.user.id)
+            await UsageDAO().increment_daily_usage_count(interaction.user.id)
         except Exception as e:
             await interaction.followup.send(
                 f"**ERROR** - レスポンスの生成に失敗しました: {e!s}",
