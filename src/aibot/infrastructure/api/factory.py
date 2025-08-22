@@ -61,10 +61,17 @@ class ResponseFactory:
             If API key is not found.
 
         """
-        env_key = os.getenv(f"{provider.upper()}_API_KEY")
+        # Handle special case for Google provider which uses GEMINI_API_KEY
+        if provider == "google":
+            env_key = os.getenv("GEMINI_API_KEY")
+        else:
+            env_key = os.getenv(f"{provider.upper()}_API_KEY")
+
         if env_key:
             return env_key
-        msg = f"No API key found for {provider}"
+
+        expected_key = "GEMINI_API_KEY" if provider == "google" else f"{provider.upper()}_API_KEY"
+        msg = f"No API key found for {provider}. Expected environment variable: {expected_key}"
         raise ValueError(msg)
 
     def _create_chat_message(self, response: LLMResponse) -> ChatMessage:

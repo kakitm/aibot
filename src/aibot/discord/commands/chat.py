@@ -7,11 +7,13 @@ from src.aibot.infrastructure.dao.usage import UsageDAO
 from src.aibot.logger import logger
 from src.aibot.models.chat import ChatMessage
 from src.aibot.services.instruction import InstructionService
+from src.aibot.services.model_resolver import ModelResolver
 from src.aibot.services.provider import ProviderManager
 
 api_factory = ResponseFactory()
 client = BotClient().get_instance()
 instruction_service = InstructionService.get_instance()
+model_resolver = ModelResolver.get_instance()
 provider_manager = ProviderManager.get_instance()
 
 
@@ -52,13 +54,13 @@ async def chat_command(interaction: Interaction, user_msg: str) -> None:
             )
             return
 
-        # Get current provider and generate response
-        current_provider = provider_manager.get_provider()
-        logger.debug("Using AI provider: %s for chat", current_provider)
+        # Get model config and generate response
+        model_config = model_resolver.resolve_model_for_command("chat")
 
         response = await api_factory.generate_llm_response(
-            system=system_instruction,
             messages=[message],
+            instruction=system_instruction,
+            model_config=model_config,
         )
 
         await interaction.followup.send(f"{response.content}")
