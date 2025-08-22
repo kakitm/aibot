@@ -26,7 +26,7 @@ class InstructionService:
         if cls._instance is None:
             cls._instance = super().__new__(cls)
             cls._instance.__dict__["_instructions_dir"] = Path("resources/instructions")
-            cls._instance.__dict__["_static_instruction_file"] = Path("resources/instructions.yml")
+            cls._instance.__dict__["_static_instruction_file"] = Path("resources/instructions/instructions.yml")
         return cls._instance
 
     @classmethod
